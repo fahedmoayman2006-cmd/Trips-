@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NILEX – Egypt Excursions, One Tap Away</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#07303A;--sea:#0E7C86;--foam:#E3F2F1;--bg:#F4F9F9;--card:#fff;--coral:#FF6B57;--sun:#FFC247;--mute:#5E7A80;--line:#D5E6E6}
+*{box-sizing:border-box;margin:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+h1,h2,h3,.logo{font-family:'Bricolage Grotesque','DM Sans',sans-serif;line-height:1.1}
+#app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:40px}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px}
+.logo{font-size:24px;font-weight:800;color:var(--sea)}.logo b{color:var(--coral)}
+.pill{background:var(--foam);color:var(--sea);border:0;border-radius:99px;padding:8px 14px;font:700 13px 'DM Sans';cursor:pointer}
+.view{display:none;padding:0 20px}.view.on{display:block}
+.hero{background:linear-gradient(160deg,var(--sea),#0A4F5E 70%);color:#fff;border-radius:24px;padding:24px 20px;margin-bottom:22px}
+.hero p{opacity:.85;font-size:14px;margin:6px 0 14px}
+h1{font-size:30px;font-weight:800}h2{font-size:22px;margin:4px 0 12px}h3{font-size:18px}
+select,input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font:500 15px 'DM Sans';background:#fff;color:var(--ink)}
+.hero select{border:0}
+select:focus,input:focus,button:focus-visible{outline:3px solid var(--sun);outline-offset:1px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.chip{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:12px 4px;text-align:center;font:600 12px 'DM Sans';cursor:pointer;color:var(--ink)}
+.chip span{display:block;font-size:26px}
+.chip.sel{border-color:var(--sea);background:var(--foam)}
+.btn{display:block;width:100%;background:var(--coral);color:#fff;border:0;border-radius:14px;padding:15px;font:700 16px 'DM Sans';cursor:pointer;margin-top:14px}
+.btn.alt{background:var(--ink)}.btn.ghost{background:var(--foam);color:var(--sea)}
+.btn:disabled{opacity:.5}
+.trip{display:flex;gap:14px;background:var(--card);border-radius:18px;margin-bottom:12px;overflow:hidden;cursor:pointer;border:1px solid var(--line)}
+.thumb{width:92px;flex:none;display:grid;place-items:center;font-size:38px}
+.trip .tb{padding:12px 12px 12px 0;flex:1}
+.trip h3{font-size:16px}.meta{color:var(--mute);font-size:13px}
+.price{font:800 20px 'Bricolage Grotesque';color:var(--sea)}
+.ver{display:inline-block;background:#DDF5E4;color:#17703A;font:700 11px 'DM Sans';padding:2px 8px;border-radius:99px}
+.back{background:none;border:0;color:var(--sea);font:700 14px 'DM Sans';padding:0 0 12px;cursor:pointer}
+.cover{height:170px;border-radius:22px;display:grid;place-items:center;font-size:76px;margin-bottom:14px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px}
+.fact b{display:block;font-size:15px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;font-size:14px}
+.box ul{list-style:none;padding:0}.box li{padding:3px 0}
+.yes li::before{content:"✓ ";color:#17703A;font-weight:700}.no li::before{content:"✕ ";color:var(--coral);font-weight:700}
+.rev{border-top:1px solid var(--line);padding:10px 0;font-size:14px}.rev:first-of-type{border:0}
+.final{background:var(--sun);color:var(--ink);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px;margin:12px 0}
+label{display:block;font:700 13px 'DM Sans';margin:14px 0 6px}
+.qrow{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:10px 16px;font:600 14px 'DM Sans';cursor:pointer;color:var(--ink)}
+.opt.sel{background:var(--sea);border-color:var(--sea);color:#fff}
+.ok{text-align:center;padding:20px 0}.ok .big{font-size:64px}
+.code{font:800 28px 'Bricolage Grotesque';letter-spacing:2px;background:var(--foam);color:var(--sea);border-radius:14px;padding:12px;margin:12px 0}
+.stars{display:flex;gap:6px;justify-content:center;font-size:34px;margin:10px 0}
+.stars button{background:none;border:0;cursor:pointer;color:#C9D8D8;font-size:34px}.stars button.on{color:var(--sun)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+<header><div class="logo">NILE<b>X</b></div><button class="pill" id="myBtn">My bookings</button></header>
+
+<section class="view on" id="home">
+  <div class="hero">
+    <h1>What do you want to do today?</h1>
+    <p>Pick it. Book it. Ride. No surprises at pickup.</p>
+    <select id="city" aria-label="Your city"></select>
+  </div>
+  <div class="chips" id="cats"></div>
+  <div id="homeList"></div>
+  <button class="btn alt" id="finderBtn">✨ Not sure? Find my trip in 4 questions</button>
+</section>
+
+<section class="view" id="finder">
+  <button class="back" data-go="home">← Back</button>
+  <h2>Smart Trip Finder</h2>
+  <label>1. Where are you?</label><select id="fCity"></select>
+  <label>2. How much do you want to spend?</label>
+  <div class="qrow" id="fBudget"></div>
+  <label>3. How many hours do you have?</label>
+  <div class="qrow" id="fHours"></div>
+  <label>4. What do you like?</label>
+  <div class="qrow" id="fLike"></div>
+  <button class="btn" id="fGo">Show my trips</button>
+</section>
+
+<section class="view" id="results">
+  <button class="back" data-go="home">← Back</button>
+  <h2 id="resTitle"></h2><div id="resList"></div>
+</section>
+
+<section class="view" id="detail"></section>
+<section class="view" id="book"></section>
+<section class="view" id="done"></section>
+
+<section class="view" id="mine">
+  <button class="back" data-go="home">← Back</button>
+  <h2>My bookings</h2><div id="mineList"></div>
+</section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CITIES=["Hurghada","Sharm El Sheikh","Marsa Alam","Luxor","Cairo"];
+const CATS=[["🏖️","Beach"],["🤿","Diving"],["🐠","Snorkeling"],["🏜️","Safari"],["🏛️","Culture"],["🚤","Boat Trips"],["🐬","Dolphin"],["🌅","Sunset"]];
+const G=["linear-gradient(135deg,#7FD6D1,#0E7C86)","linear-gradient(135deg,#FFD28A,#FF8A5B)","linear-gradient(135deg,#B9C6FF,#5B6CFF)","linear-gradient(135deg,#FFE7A3,#E8A33D)"];
+
+/* ====== EDIT YOUR TRIPS HERE ====== */
+const TRIPS=[
+{id:1,title:"Giftun Island Snorkeling",cat:"Snorkeling",city:"Hurghada",price:35,hours:6,pickup:"Hotel pickup, Hurghada & El Gouna",max:30,level:"Easy",start:"08:30",emoji:"🐠",g:0,provider:"Red Sea Blue",inc:["Hotel pickup & drop-off","Lunch & soft drinks","Snorkel gear","Licensed guide"],exc:["Alcohol","Tips","Underwater photos"],cancel:"Free cancellation up to 24h before",rating:4.8,rev:[["Anna, DE","Crystal water, great crew."],["Marco, IT","Exactly as described, no extras."]]},
+{id:2,title:"Orange Bay Boat Day",cat:"Boat Trips",city:"Hurghada",price:40,hours:7,pickup:"Marina Hurghada, 08:00",max:40,level:"Easy",start:"08:00",emoji:"🚤",g:0,provider:"Nile Sea Tours",inc:["Boat ride","BBQ lunch","Beach chairs","Snorkel gear"],exc:["Drinks","Tips"],cancel:"Free cancellation up to 48h before",rating:4.7,rev:[["Julia, PL","Perfect for families."],["Tom, UK","Great value for 40€."]]},
+{id:3,title:"Desert Quad & Bedouin Dinner",cat:"Safari",city:"Hurghada",price:30,hours:5,pickup:"Hotel pickup, Hurghada",max:20,level:"Moderate",start:"15:00",emoji:"🏜️",g:3,provider:"Sahara Riders",inc:["Quad bike","Bedouin dinner","Camel ride","Hotel transfer"],exc:["Drinks","Photos"],cancel:"Free cancellation up to 24h before",rating:4.6,rev:[["Ivan, RU","Sunset was unreal."],["Lea, FR","Fun and safe."]]},
+{id:4,title:"Dolphin House Snorkel",cat:"Dolphin",city:"Marsa Alam",price:45,hours:6,pickup:"Port Ghalib, 07:00",max:25,level:"Easy",start:"07:00",emoji:"🐬",g:0,provider:"Reef Guardians",inc:["Boat","Breakfast & lunch","Snorkel gear"],exc:["Park fee €5","Tips"],cancel:"Free cancellation up to 24h before",rating:4.9,rev:[["Sara, NL","We swam with dolphins!"],["Kim, KR","Responsible guides."]]},
+{id:5,title:"Ras Mohammed Diving (2 dives)",cat:"Diving",city:"Sharm El Sheikh",price:65,hours:8,pickup:"Hotel pickup, Naama Bay",max:12,level:"Active",start:"07:30",emoji:"🤿",g:2,provider:"Coral PADI Center",inc:["2 dives","Instructor","Full equipment","Lunch"],exc:["Park fee €10"],cancel:"Free cancellation up to 48h before",rating:4.9,rev:[["Max, DE","Pro team, clean gear."],["Ella, SE","Best dive of my trip."]]},
+{id:6,title:"Sunset Sail on the Red Sea",cat:"Sunset",city:"Sharm El Sheikh",price:28,hours:3,pickup:"Sharm Marina, 16:30",max:30,level:"Easy",start:"16:30",emoji:"🌅",g:1,provider:"Sinai Sails",inc:["Sailboat","Tea & snacks","Music"],exc:["Alcohol"],cancel:"Free cancellation up to 12h before",rating:4.7,rev:[["Nina, CZ","Romantic and calm."]]},
+{id:7,title:"Karnak & Luxor Temple Tour",cat:"Culture",city:"Luxor",price:32,hours:5,pickup:"Hotel pickup, Luxor",max:15,level:"Easy",start:"08:00",emoji:"🏛️",g:3,provider:"Pharaoh Guides",inc:["Egyptologist guide","Entry tickets","A/C van","Water"],exc:["Lunch","Tips"],cancel:"Free cancellation up to 24h before",rating:4.8,rev:[["Paul, US","Our guide was fantastic."]]},
+{id:8,title:"Pyramids & Sphinx Half Day",cat:"Culture",city:"Cairo",price:38,hours:5,pickup:"Hotel pickup, Cairo & Giza",max:15,level:"Easy",start:"09:00",emoji:"🏛️",g:3,provider:"Giza Heritage",inc:["Guide","Pickup","Water","Entry to plateau"],exc:["Inside-pyramid ticket","Tips"],cancel:"Free cancellation up to 24h before",rating:4.7,rev:[["Chloe, CA","Skipped all the hassle."]]},
+{id:9,title:"Paradise Island Beach Day",cat:"Beach",city:"Hurghada",price:25,hours:6,pickup:"Hotel pickup, Hurghada",max:50,level:"Easy",start:"09:00",emoji:"🏖️",g:1,provider:"Paradise Trips",inc:["Boat","Lunch","Sunbeds"],exc:["Drinks"],cancel:"Free cancellation up to 24h before",rating:4.5,rev:[["Eva, AT","Beautiful sand, relaxed day."]]}
+];
+/* ================================== */
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let state={city:"Hurghada",cat:null,cur:null,fin:{budget:"any",hours:"any",like:null},bookings:[]};
+const stars=n=>"★".repeat(Math.round(n))+"☆".repeat(5-Math.round(n));
+const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
+function show(id){$$(".view").forEach(v=>v.classList.toggle("on",v.id===id));scrollTo(0,0)}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b){if(b.dataset.go==="home")renderHome();show(b.dataset.go)}});
+
+function tripCard(t){return `<div class="trip" data-id="${t.id}" role="button" tabindex="0"><div class="thumb" style="background:${G[t.g]}">${t.emoji}</div><div class="tb"><h3>${t.title}</h3><div class="meta">⏱️ ${t.hours}h · 📍 ${t.city}</div><div class="meta">⭐ ${t.rating} · <span class="ver">✅ Verified</span></div><div class="price">€${t.price} <span class="meta" style="font:500 12px 'DM Sans'">final price</span></div></div></div>`}
+function bindCards(root){root.querySelectorAll(".trip").forEach(c=>{const go=()=>openTrip(+c.dataset.id);c.onclick=go;c.onkeydown=e=>{if(e.key==="Enter")go()}})}
+
+function renderHome(){
+  $("#city").innerHTML=CITIES.map(c=>`<option ${c===state.city?"selected":""}>${c}</option>`).join("");
+  $("#cats").innerHTML=CATS.map(([e,n])=>`<button class="chip ${state.cat===n?"sel":""}" data-cat="${n}"><span>${e}</span>${n}</button>`).join("");
+  const list=TRIPS.filter(t=>t.city===state.city&&(!state.cat||t.cat===state.cat));
+  $("#homeList").innerHTML=list.length?list.map(tripCard).join(""):`<div class="box">No trips here yet for ${state.cat||"this city"}. Try another activity or city.</div>`;
+  bindCards($("#homeList"));
+  $$(".chip").forEach(c=>c.onclick=()=>{state.cat=state.cat===c.dataset.cat?null:c.dataset.cat;renderHome()});
+  $("#city").onchange=e=>{state.city=e.target.value;renderHome()};
+}
+
+function opts(el,arr,key){
+  $(el).innerHTML=arr.map(([l,v])=>`<button class="opt ${state.fin[key]===v?"sel":""}" data-v="${v}">${l}</button>`).join("");
+  $$(el+" .opt").forEach(b=>b.onclick=()=>{state.fin[key]=b.dataset.v;opts(el,arr,key)});
+}
+function renderFinder(){
+  $("#fCity").innerHTML=CITIES.map(c=>`<option ${c===state.city?"selected":""}>${c}</option>`).join("");
+  opts("#fBudget",[["Under €30","30"],["Up to €50","50"],["€50+","999"],["Any","any"]],"budget");
+  opts("#fHours",[["Up to 4h","4"],["Up to 6h","6"],["8h or more","99"],["Any","any"]],"hours");
+  opts("#fLike",[["🏖️ Beach","Beach"],["🤿 Diving","Diving"],["🐠 Snorkeling","Snorkeling"],["🏜️ Safari","Safari"],["🏛️ Culture","Culture"],["🚤 Boat","Boat Trips"],["🐬 Dolphin","Dolphin"],["🌅 Sunset","Sunset"]],"like");
+}
+$("#finderBtn").onclick=()=>{renderFinder();show("finder")};
+$("#fGo").onclick=()=>{
+  const f=state.fin,city=$("#fCity").value;state.city=city;
+  const score=t=>{let s=0;
+    if(t.city!==city)return -1;
+    if(f.budget==="30"&&t.price<=30)s+=2;else if(f.budget==="50"&&t.price<=50)s+=2;else if(f.budget==="999"&&t.price>50)s+=2;else if(f.budget==="any")s+=1;
+    if(f.hours==="any")s+=1;else if(f.hours==="99"?t.hours>=8:t.hours<=+f.hours)s+=2;
+    if(f.like&&t.cat===f.like)s+=4;
+    return s+t.rating/10};
+  const top=TRIPS.map(t=>[score(t),t]).filter(x=>x[0]>=0).sort((a,b)=>b[0]-a[0]).slice(0,3).map(x=>x[1]);
+  $("#resTitle").textContent=top.length?`${top.length} trip${top.length>1?"s":""} recommended for you`:"No matches yet";
+  $("#resList").innerHTML=top.length?top.map(tripCard).join(""):`<div class="box">We don't have trips in ${city} yet. Try another city.</div>`;
+  bindCards($("#resList"));show("results");
+};
+
+function openTrip(id){
+  const t=TRIPS.find(x=>x.id===id);state.cur=t;
+  $("#detail").innerHTML=`<button class="back" data-go="home">← Back</button>
+  <div class="cover" style="background:${G[t.g]}">${t.emoji}</div>
+  <h2>${t.title}</h2>
+  <div class="meta"><span class="ver">✅ Verified provider</span> ${t.provider} · ⭐ ${t.rating} ${stars(t.rating)}</div>
+  <div class="final">💰 €${t.price} per person = final price. Nothing to pay on arrival.</div>
+  <div class="facts">
+    <div class="fact">⏱️ Duration<b>${t.hours} hours</b></div>
+    <div class="fact">🕗 Starts<b>${t.start}</b></div>
+    <div class="fact">📍 Pickup<b>${t.pickup}</b></div>
+    <div class="fact">👥 Group size<b>Up to ${t.max}</b></div>
+    <div class="fact">💪 Activity level<b>${t.level}</b></div>
+    <div class="fact">🔁 Cancellation<b>${t.cancel.replace("Free cancellation ","Free ")}</b></div>
+  </div>
+  <div class="box yes"><h3>Included</h3><ul>${t.inc.map(i=>`<li>${i}</li>`).join("")}</ul></div>
+  <div class="box no"><h3>Not included</h3><ul>${t.exc.map(i=>`<li>${i}</li>`).join("")}</ul></div>
+  <div class="box"><h3>Reviews from real bookings</h3>${t.rev.map(r=>`<div class="rev"><b>${r[0]}</b> ★★★★★ <span class="ver">Booked</span><br>${r[1]}</div>`).join("")}</div>
+  <button class="btn" id="bookNow">Book now · €${t.price}</button>`;
+  $("#bookNow").onclick=renderBook;show("detail");
+}
+
+function renderBook(){
+  const t=state.cur,tmr=new Date(Date.now()+864e5).toISOString().slice(0,10);
+  $("#book").innerHTML=`<button class="back" id="bk">← Back</button><h2>Book: ${t.title}</h2>
+  <label>Full name</label><input id="bName" autocomplete="name" placeholder="As on your passport">
+  <label>Email</label><input id="bMail" type="email" autocomplete="email" placeholder="Confirmation is sent here">
+  <label>Date</label><input id="bDate" type="date" min="${tmr}" value="${tmr}">
+  <label>Guests</label><select id="bQty">${Array.from({length:Math.min(t.max,10)},(_,i)=>`<option>${i+1}</option>`).join("")}</select>
+  <label>Card number (demo)</label><input id="bCard" inputmode="numeric" placeholder="4242 4242 4242 4242">
+  <div class="final" id="tot"></div>
+  <button class="btn" id="pay"></button>`;
+  const upd=()=>{const q=+$("#bQty").value,tot=q*t.price;$("#tot").textContent=`Total: €${tot} (${q} × €${t.price}). No hidden fees.`;$("#pay").textContent=`Pay €${tot} and confirm`};
+  $("#bQty").onchange=upd;upd();
+  $("#bk").onclick=()=>show("detail");
+  $("#pay").onclick=()=>{
+    const n=$("#bName").value.trim(),m=$("#bMail").value.trim();
+    if(!n||!/\S+@\S+\.\S+/.test(m))return toast("Enter your name and a valid email");
+    if($("#bCard").value.replace(/\D/g,"").length<12)return toast("Enter a valid card number");
+    const q=+$("#bQty").value,b={code:"NLX-"+Math.random().toString(36).slice(2,7).toUpperCase(),trip:t,name:n,date:$("#bDate").value,qty:q,total:q*t.price,rated:0};
+    state.bookings.push(b);save();renderDone(b);
+  };
+  show("book");
+}
+function renderDone(b){
+  $("#done").innerHTML=`<div class="ok"><div class="big">🎉</div><h2>You're booked!</h2>
+  <div class="meta">Show this code to your guide</div><div class="code">${b.code}</div>
+  <div class="box" style="text-align:left"><b>${b.trip.title}</b><br>📅 ${b.date} at ${b.trip.start}<br>📍 ${b.trip.pickup}<br>👥 ${b.qty} guest${b.qty>1?"s":""} · 💰 €${b.total} paid in full</div>
+  <p class="meta">After your trip, come back and rate it.</p>
+  <button class="btn" id="rateNow">Rate this trip</button><button class="btn ghost" data-go="home">Explore more</button></div>`;
+  $("#rateNow").onclick=()=>renderMine();show("done");
+}
+
+function renderMine(){
+  const L=$("#mineList");
+  L.innerHTML=state.bookings.length?state.bookings.map((b,i)=>`<div class="box"><b>${b.trip.title}</b><div class="meta">${b.code} · ${b.date} · €${b.total}</div>
+  <div class="stars" data-i="${i}">${[1,2,3,4,5].map(n=>`<button class="${b.rated>=n?"on":""}" aria-label="${n} stars" data-n="${n}">★</button>`).join("")}</div>
+  <div class="meta" style="text-align:center">${b.rated?"Thanks! Your verified review is saved.":"Tap to rate after your trip"}</div></div>`).join(""):`<div class="box">No bookings yet. Pick a trip to get started.</div>`;
+  $$("#mineList .stars button").forEach(s=>s.onclick=()=>{const i=+s.parentNode.dataset.i;state.bookings[i].rated=+s.dataset.n;save();renderMine();toast("Review saved ✅")});
+  show("mine");
+}
+$("#myBtn").onclick=renderMine;
+
+function save(){try{localStorage.setItem("nilex",JSON.stringify(state.bookings))}catch(e){}}
+try{state.bookings=JSON.parse(localStorage.getItem("nilex")||"[]")}catch(e){}
+renderHome();
+</script>
+</body>
+</html>
